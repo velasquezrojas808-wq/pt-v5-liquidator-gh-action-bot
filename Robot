@@ -1,0 +1,15 @@
+// Ejemplo de genética autorreparable en TS
+const providers = [process.env.JSON_RPC_URL, "https://optimism.io"];
+
+async function getActiveProvider() {
+  for (let url of providers) {
+    try {
+      const p = new ethers.providers.JsonRpcProvider(url);
+      await p.getBlockNumber(); // Test de vida
+      return p;
+    } catch (e) {
+      console.log(`🧬 Nodo fallido, mutando al siguiente...`);
+    }
+  }
+}
+
